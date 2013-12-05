@@ -1,34 +1,35 @@
 // TI example code
 
 #include <msp430g2553.h>
+#include "RobotSensing.h"
 
 int main(void)
 {
   WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
-  ADC10CTL0 = ADC10SHT_3 + ADC10ON + ADC10IE; // ADC10ON, interrupt enabled
-  ADC10CTL1 = INCH_3;                       // input A4
-  ADC10AE0 |= BIT3;                         // PA.1 ADC option select
-  ADC10CTL1 |= ADC10SSEL1|ADC10SSEL0;                // Select SMCLK
+
+  initSensors();
+
   P1DIR |= 0x41;                            // Set P1.0 to output direction
 
   for (;;)
   {
-    ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
-    __bis_SR_register(CPUOFF + GIE);        // LPM0, ADC10_ISR will force exit
-    if (ADC10MEM < 0x2FF)
-      P1OUT &= ~0x41;                       // Clear P1.0 LED off
+	  LeftSensorScan();
 
-    else
-      P1OUT |= BIT6;                        // Set P1.0 LED on
+    if (ADC10MEM > 0x2FF)
+    	P1OUT |= BIT0;
+    	else
+        	P1OUT &= ~BIT0;
 
+    _delay_cycles(100000);
+    RightSensorScan();
+
+    if (ADC10MEM > 0x1FF)
+        P1OUT |= BIT6;                      // Set P1.0 LED on
+    	else
+    		P1OUT &= ~BIT6;    					// Clear P1.0 and P1.6 LED off
+    _delay_cycles(100000);
   }
-
     return 0;
 }
 
-// ADC10 interrupt service routine
-#pragma vector=ADC10_VECTOR
-__interrupt void ADC10_ISR(void)
-{
-  __bic_SR_register_on_exit(CPUOFF);        // Clear CPUOFF bit from 0(SR)
-}
+
