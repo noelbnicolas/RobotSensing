@@ -14,11 +14,11 @@ void initSensors();
 Get reading from center sensor
 ============================
   *int CenterSensorScan(){
-  *        ADC10CTL0 &= ~ENC;                                                        //Clear
-  *        ADC10CTL1 = INCH_3;                       // input A3
-  *        ADC10AE0 |= BIT3;                         // PA.1 ADC option select
-  *        ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
-  *        __bis_SR_register(CPUOFF + GIE);        // LPM0, ADC10_ISR will force exit
+          ADC10CTL0 &= ~ENC;                                                        //Clear
+         ADC10CTL1 = INCH_3;                       // input A3
+          ADC10AE0 |= BIT3;                         // PA.1 ADC option select
+          ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion start
+          __bis_SR_register(CPUOFF + GIE);        // LPM0, ADC10_ISR will force exit
       return ADC10MEM;
   }
 
