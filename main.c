@@ -20,14 +20,14 @@ int main(void)
     	else
         	P1OUT &= ~BIT0;
 
-    _delay_cycles(300000);
+    _delay_cycles(200000);
     RightSensorScan();
 
-    if (ADC10MEM > 0x1FF)
+    if (ADC10MEM > 0x200)
         P1OUT |= BIT6;                      // Set P1.0 LED on
     	else
     		P1OUT &= ~BIT6;    					// Clear P1.0 and P1.6 LED off
-    _delay_cycles(300000);
+    _delay_cycles(200000);
   }
     return 0;
 }

@@ -18,7 +18,8 @@ __interrupt void ADC10_ISR(void)
 
 void initSensors(){
 	ADC10CTL0 = ADC10SHT_3 + ADC10ON + ADC10IE; // ADC10ON, interrupt enabled
-	ADC10CTL1 |= ADC10SSEL1|ADC10SSEL0;                // Select SMCLK
+//	ADC10CTL1 |= ADC10SSEL1|ADC10SSEL0;                // Select SMCLK
+	ADC10CTL1 |= ADC10DIV2;
 }
 
 int CenterSensorScan(){
