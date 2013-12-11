@@ -31,3 +31,5 @@ LEDs
 
 
   * In the main program, the left sensor scans. If the sensor is an inch away from an obstacle, the left LED (P1.0) lights up. Then a delay occurs so only one interrupt occurs in a certain time frame. The right sensor scans next. If the sensor is an inch away from an obstacle, the right LED (P1.6) lights up. When the sensors are away from any obstable (greater than 2 inches), the respective light is off. The right sensor is a lot weaker compared to the left sensor. This is why the threshold is 1FF for the right and 2FF for the left for the same distance.
+  
+Documentation: C2C Busho explained that I needed to clear my bits when I set ADC10CTL1 = to something
